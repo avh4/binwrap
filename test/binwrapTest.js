@@ -17,7 +17,7 @@ describe("binwrap", function() {
     testServer.close();
   });
 
-  it("", function() {
+  it("wraps *nix executables in tgz files", function() {
     this.timeout(0);
     return exec(
       "(cd test_app && ./node_modules/.bin/binwrap-install)"
@@ -29,7 +29,7 @@ describe("binwrap", function() {
     });
   });
 
-  it("(simulating windows)", function() {
+  it("wraps Windows executables in zip files", function() {
     this.timeout(0);
     return exec(
       "(cd test_app && ./node_modules/.bin/binwrap-install win x64)"
