@@ -22,8 +22,8 @@ describe("binwrap", function() {
     return exec("(cd test_app && ./node_modules/.bin/binwrap-install)").then(
       function(result) {
         console.log(result.stdout);
-        return exec("test_app/bin/echoMe").then(function(result) {
-          expect(result.stdout).to.equal("Me!\n");
+        return exec("test_app/bin/echoMe A B C").then(function(result) {
+          expect(result.stdout).to.equal("Me! A B C\n");
         });
       },
       function(result) {
