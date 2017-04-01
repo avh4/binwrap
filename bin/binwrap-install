@@ -1,0 +1,12 @@
+#!/usr/bin/env node
+
+var path = require("path");
+var package = require(path.join(process.cwd(), "package.json"));
+var config = require(path.join(process.cwd(), package.main));
+var install = require(path.join("..", "install.js"));
+install(config).then(function(result) {
+  console.log("OK", result);
+}, function(result) {
+  console.log("ERR", result);
+  process.exit(1);
+});

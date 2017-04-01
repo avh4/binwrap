@@ -1,0 +1,23 @@
+{
+  "name": "echoMe",
+  "version": "0.0.0",
+  "description": "Test app for avh4/binwrap",
+  "preferGlobal": true,
+  "main": "install.js",
+  "scripts": {
+    "install": "binwrap-install",
+    "prepublish": "npm test && echo \"Don't publish this test package\" && false",
+    "test": "binwrap-test"
+  },
+  "license": "BSD-3-Clause",
+  "files": [
+    "install.js",
+    "bin"
+  ],
+  "bin": {
+    "echoMe": "bin/echoMe"
+  },
+  "dependencies": {
+    "binwrap": "^1.0.0"
+  }
+}
