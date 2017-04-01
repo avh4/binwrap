@@ -11,7 +11,7 @@
   },
   "license": "BSD-3-Clause",
   "files": [
-    "install.js",
+    "index.js",
     "bin"
   ],
   "bin": {

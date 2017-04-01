@@ -12,7 +12,7 @@ Now create your npm installer: Make a `package.json` that looks like this:
   "version": "1.0.0",
   "description": "Install myApp",
   "preferGlobal": true,
-  "main": "install.js",
+  "main": "index.js",
   "scripts": {
     "install": "binwrap-install",
     "test": "binwrap-test",
@@ -20,7 +20,7 @@ Now create your npm installer: Make a `package.json` that looks like this:
   },
   "license": "BSD-3-Clause",
   "files": [
-    "install.js",
+    "index.js",
     "bin"
   ],
   "bin": {
@@ -32,20 +32,25 @@ Now create your npm installer: Make a `package.json` that looks like this:
 }
 ```
 
-Then create your `install.js` file like this:
+Then create your `index.js` file like this:
 
 ```javascript
 var binwrap = require("binwrap");
+var path = require("path");
+
+var packageInfo = require(path.join(__dirname, "package.json"));
+var version = packageInfo.version;
+var root = "https://dl.bintray.com/me/myApp/" + version;
 
 module.exports = binwrap({
   binaries: [
     "myapp-cli"
   ],
   urls: {
-    "darwin-x64": "https://dl.bintray.com/me/myApp/0.0.0/mac-x64.tgz",
-    "linux-x64": "https://dl.bintray.com/me/myApp/0.0.0/linux-x64.tgz",
-    "win-x64": "https://dl.bintray.com/me/myApp/0.0.0/win-i386.zip",
-    "win-ia32": "https://dl.bintray.com/me/myApp/0.0.0/win-i386.zip"
+    "darwin-x64": root + "/mac-x64.tgz",
+    "linux-x64": root + "/linux-x64.tgz",
+    "win-x64": root + "/win-i386.zip",
+    "win-ia32": root + "/win-i386.zip"
   }
 });
 ```
