@@ -1,0 +1,23 @@
+{
+  "name": "binwrap",
+  "version": "1.0.0",
+  "description": "Package cross-platform binaries",
+  "main": "index.js",
+  "scripts": {
+    "test": "eslint . && mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/avh4/binwrap.git"
+  },
+  "author": "Aaron VonderHaar <gruen0aermel@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/avh4/binwrap/issues"
+  },
+  "homepage": "https://github.com/avh4/binwrap#readme",
+  "devDependencies": {
+    "eslint": "^3.19.0",
+    "mocha": "^3.2.0"
+  }
+}
