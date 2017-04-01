@@ -1,8 +1,11 @@
 #!/usr/bin/env node
 
 var path = require("path");
-var package = require(path.join(process.cwd(), "package.json"));
-var info = require(path.join(process.cwd(), package.main));
+var packageInfo = require(path.join(process.cwd(), "package.json"));
+var package = require(path.join(process.cwd(), packageInfo.main));
 
-// console.log(package.main);
-console.log("TODO: fail if URLs don't exist");
+package.test().then(function(result) {
+}, function(result) {
+  console.error(result);
+  process.exit(1);
+});

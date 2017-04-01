@@ -40,4 +40,24 @@ describe("binwrap", function() {
       });
     });
   });
+
+  it("fails when specified URLs don't exist", function() {
+    this.timeout(0);
+    testServer.close();
+    return exec("(cd test_app && npm test)").then(
+      function(result) {
+        console.log(result.stdout);
+        throw new Error("Expected binwrap-test to fail");
+      },
+      function() {
+        // pass
+        testServer.listen(HTTP_PORT);
+      }
+    );
+  });
+
+  it("passes tests when specified URLs do exist", function() {
+    this.timeout(0);
+    return exec("(cd test_app && npm test)");
+  });
 });

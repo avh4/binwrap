@@ -2,7 +2,7 @@ var fs = require("fs");
 var binstall = require("./binstall");
 var path = require("path");
 
-module.exports = function(config, os, arch) {
+module.exports = function install(config, os, arch) {
   if (!fs.existsSync("bin")) {
     fs.mkdirSync("bin");
   }
