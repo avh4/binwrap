@@ -1,1 +1,7 @@
 language: node_js
+
+before_script:
+- (cd test_app; mkdir -p node_modules/.bin)
+- (cd test_app/node_modules; ln -s ../.. binwrap)
+- (cd test_app/node_modules/.bin; ln -s ../binwrap/bin/binwrap-install)
+- (cd test_app/node_modules/.bin; ln -s ../binwrap/bin/binwrap-test)
