@@ -86,8 +86,6 @@ function unzipUrl(url, path, options) {
       .on("close", function() {
         var successMessage = "Successfully downloaded and processed " + url;
 
-        fs.renameSync("binaries/elm-format.exe", "binaries/elm-format");
-
         if (verify) {
           verifyContents(verify)
             .then(function() {

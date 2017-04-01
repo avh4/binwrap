@@ -3,5 +3,6 @@
 exports.binaries = ["echoMe"];
 
 exports.urls = {
-  "mac-x64": "http://localhost:9999/echoMe-0.0.0-mac-x64.tgz"
+  "darwin-x64": "http://localhost:9999/echoMe-0.0.0-mac-x64.tgz",
+  "win-x64": "http://localhost:9999/echoMe-0.0.0-win-i386.zip"
 };

@@ -2,10 +2,16 @@ var fs = require("fs");
 var binstall = require("./binstall");
 var path = require("path");
 
-module.exports = function(config) {
+module.exports = function(config, os, arch) {
   if (!fs.existsSync("bin")) {
     fs.mkdirSync("bin");
   }
+
+  var binExt = "";
+  if (os == "win") {
+    binExt = ".exe";
+  }
+
   config.binaries.forEach(function(bin) {
     var binPath = path.join("bin", bin);
     fs.writeFileSync(
@@ -14,13 +20,21 @@ module.exports = function(config) {
         'var path = require("path");\n' +
         'var spawn = require("child_process").spawn;\n' +
         'spawn(path.join(__dirname, "' +
-        path.join("..", "unpacked_bin", bin) +
+        path.join("..", "unpacked_bin", bin + binExt) +
         "\"), process.argv.slice(2), {stdio: 'inherit'}).on('exit', process.exit);"
     );
     fs.chmodSync(binPath, "755");
   });
 
-  return binstall(config.urls["mac-x64"], "unpacked_bin").then(function() {
+  var buildId = os + "-" + arch;
+  var url = config.urls[buildId];
+  if (!url) {
+    throw new Error("No binaries are available for your platform: " + buildId);
+  }
+  return binstall(url, "unpacked_bin").then(function() {
+    config.binaries.forEach(function(bin) {
+      fs.chmodSync(path.join("unpacked_bin", bin + binExt), "755");
+    });
     // verifyAllBinsExist(packageInfo.bin);
   });
 };
