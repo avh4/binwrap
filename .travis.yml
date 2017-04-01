@@ -1,4 +1,5 @@
 language: node_js
+node_js: "6"
 
 before_script:
 - (cd test_app; mkdir -p node_modules/.bin)
