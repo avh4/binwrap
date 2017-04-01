@@ -35,14 +35,19 @@ Now create your npm installer: Make a `package.json` that looks like this:
 Then create your `install.js` file like this:
 
 ```javascript
-exports.binaries = ["myapp-cli"];
+var binwrap = require("binwrap");
 
-exports.urls = {
-  "darwin-x64": "https://dl.bintray.com/me/myApp/0.0.0/mac-x64.tgz",
-  "linux-x64": "https://dl.bintray.com/me/myApp/0.0.0/linux-x64.tgz",
-  "win-x64": "https://dl.bintray.com/me/myApp/0.0.0/win-i386.zip",
-  "win-ia32": "https://dl.bintray.com/me/myApp/0.0.0/win-i386.zip"
-};
+module.exports = binwrap({
+  binaries: [
+    "myapp-cli"
+  ],
+  urls: {
+    "darwin-x64": "https://dl.bintray.com/me/myApp/0.0.0/mac-x64.tgz",
+    "linux-x64": "https://dl.bintray.com/me/myApp/0.0.0/linux-x64.tgz",
+    "win-x64": "https://dl.bintray.com/me/myApp/0.0.0/win-i386.zip",
+    "win-ia32": "https://dl.bintray.com/me/myApp/0.0.0/win-i386.zip"
+  }
+});
 ```
 
 Then run `npm test` to verify that your packages are published correctly.

@@ -1,0 +1,9 @@
+var binwrap = require("binwrap");
+
+module.exports = binwrap({
+  binaries: ["echoMe"],
+  urls: {
+    "darwin-x64": "http://localhost:9999/echoMe-0.0.0-mac-x64.tgz",
+    "win-x64": "http://localhost:9999/echoMe-0.0.0-win-i386.zip"
+  }
+});

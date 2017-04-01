@@ -19,35 +19,25 @@ describe("binwrap", function() {
 
   it("", function() {
     this.timeout(0);
-    return exec("(cd test_app && ./node_modules/.bin/binwrap-install)").then(
-      function(result) {
-        console.log(result.stdout);
-        return exec("test_app/bin/echoMe A B C").then(function(result) {
-          expect(result.stdout).to.equal("Me! A B C\n");
-        });
-      },
-      function(result) {
-        console.log(result);
-        throw "binwrap-install failed";
-      }
-    );
+    return exec(
+      "(cd test_app && ./node_modules/.bin/binwrap-install)"
+    ).then(function(result) {
+      console.log(result.stdout);
+      return exec("test_app/bin/echoMe A B C").then(function(result) {
+        expect(result.stdout).to.equal("Me! A B C\n");
+      });
+    });
   });
 
   it("(simulating windows)", function() {
     this.timeout(0);
     return exec(
       "(cd test_app && ./node_modules/.bin/binwrap-install win x64)"
-    ).then(
-      function(result) {
-        console.log(result.stdout);
-        return exec("test_app/bin/echoMe A B C").then(function(result) {
-          expect(result.stdout).to.equal("Me.exe! A B C\n");
-        });
-      },
-      function(result) {
-        console.log(result);
-        throw "binwrap-install failed";
-      }
-    );
+    ).then(function(result) {
+      console.log(result.stdout);
+      return exec("test_app/bin/echoMe A B C").then(function(result) {
+        expect(result.stdout).to.equal("Me.exe! A B C\n");
+      });
+    });
   });
 });

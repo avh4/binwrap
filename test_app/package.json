@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "Test app for avh4/binwrap",
   "preferGlobal": true,
-  "main": "install.js",
+  "main": "index.js",
   "scripts": {
     "install": "binwrap-install",
     "prepublish": "npm test && echo \"Don't publish this test package\" && false",
