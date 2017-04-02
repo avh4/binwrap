@@ -20,7 +20,7 @@ describe("binwrap", function() {
   it("wraps *nix executables in tgz files", function() {
     this.timeout(0);
     return exec(
-      "(cd test_app && ./node_modules/.bin/binwrap-install)"
+      "(cd test_app && ./node_modules/.bin/binwrap-install darwin x64)"
     ).then(function(result) {
       console.log(result.stdout);
       return exec("test_app/bin/echoMe A B C").then(function(result) {
