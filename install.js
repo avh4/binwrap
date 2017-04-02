@@ -1,6 +1,6 @@
 var fs = require("fs");
-var binstall = require("./binstall");
 var path = require("path");
+var binstall = require(path.join(__dirname, "binstall"));
 
 module.exports = function install(config, os, arch) {
   if (!fs.existsSync("bin")) {

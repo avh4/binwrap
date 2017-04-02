@@ -17,6 +17,9 @@
   },
   "homepage": "https://github.com/avh4/binwrap#readme",
   "files": [
+    "install.js",
+    "test.js",
+    "binstall.js",
     "bin/binwrap-install",
     "bin/binwrap-test"
   ],
