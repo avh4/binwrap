@@ -36,8 +36,8 @@
   },
   "dependencies": {
     "request": "^2.81.0",
+    "request-promise": "^4.2.0",
     "tar": "^2.2.1",
-    "then-request": "^2.2.0",
     "unzip": "^0.1.11"
   }
 }
