@@ -32,7 +32,7 @@ describe("binwrap", function() {
   it("wraps Windows executables in zip files", function() {
     this.timeout(0);
     return exec(
-      "(cd test_app && ./node_modules/.bin/binwrap-install win x64)"
+      "(cd test_app && ./node_modules/.bin/binwrap-install win32 x64)"
     ).then(function(result) {
       console.log(result.stdout);
       return exec("test_app/bin/echoMe A B C").then(function(result) {

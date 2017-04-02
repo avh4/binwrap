@@ -8,7 +8,7 @@ module.exports = function install(config, os, arch) {
   }
 
   var binExt = "";
-  if (os == "win") {
+  if (os == "win32") {
     binExt = ".exe";
   }
 
