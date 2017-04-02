@@ -19,8 +19,8 @@ module.exports = function install(config, os, arch) {
       "#!/usr/bin/env node\n" +
         'var path = require("path");\n' +
         'var spawn = require("child_process").spawn;\n' +
-        'spawn(path.join(__dirname, "' +
-        path.join("..", "unpacked_bin", bin + binExt) +
+        'spawn(path.join(__dirname, "..", "unpacked_bin", "' +
+        (bin + binExt) +
         "\"), process.argv.slice(2), {stdio: 'inherit'}).on('exit', process.exit);"
     );
     fs.chmodSync(binPath, "755");
