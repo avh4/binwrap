@@ -1,6 +1,6 @@
-// var binstall = require("./binstall");
-var install = require("./install");
-var test = require("./test");
+var path = require("path");
+var install = require(path.join(__dirname, "install"));
+var test = require(path.join(__dirname, "test"));
 
 module.exports = function(config) {
   return {
