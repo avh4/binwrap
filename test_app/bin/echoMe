@@ -1,0 +1,16 @@
+#!/usr/bin/env node
+
+var binwrap = require("binwrap");
+var spawnSync = require("child_process").spawn;
+
+// Download the appropriate file and replace myself with it.
+module.exports = binwrap({
+  binaries: [__filename],
+  urls: {
+    "darwin-x64": "http://localhost:9999/echoMe-0.0.0-mac-x64.tgz",
+    "win32-x64": "http://localhost:9999/echoMe-0.0.0-win-i386.zip"
+  }
+}).then(function() {
+  // Execute the file I just downloaded and replaced myself with.
+  spawnSync(__filename, process.argv.slice(2), { stdio: "inherit" });
+});
