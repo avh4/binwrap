@@ -1,5 +1,14 @@
 language: node_js
-node_js: "6"
+node_js:
+  - "6"
+  - "7"
+  - "8"
+  - "9"
+  - "10"
+
+os:
+  - linux
+  - osx
 
 before_script:
-- (cd test_app; npm install ../)
+  - (cd test_app; npm install ../)
