@@ -1,0 +1,24 @@
+environment:
+  matrix:
+  - nodejs_version: "10"
+  - nodejs_version: "9"
+  - nodejs_version: "8"
+  - nodejs_version: "7"
+  - nodejs_version: "6"
+
+platform:
+  - x86
+  - x64
+
+matrix:
+  fast_finish: true
+
+install:
+  - ps: Update-NodeJsInstallation (Get-NodeJsLatestBuild $env:nodejs_version) $env:Platform
+  - node --version
+  - npm --version
+  - cd test_app
+  - npm install ../
+
+test_script:
+  - npm test
