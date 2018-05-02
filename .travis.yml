@@ -7,5 +7,9 @@ node_js:
   - "10"
   - "node"
 
+os:
+  - linux
+  - osx
+
 before_script:
   - (cd test_app; npm install ../)
