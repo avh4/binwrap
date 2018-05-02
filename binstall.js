@@ -2,7 +2,7 @@ var fs = require("fs");
 var request = require("request");
 var tar = require("tar");
 var zlib = require("zlib");
-var unzip = require("unzip");
+var unzip = require("unzip-stream");
 
 function binstall(url, path, options) {
   if (url.endsWith(".zip")) {
