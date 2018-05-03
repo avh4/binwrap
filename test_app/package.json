@@ -18,6 +18,6 @@
     "echoMe": "bin/echoMe"
   },
   "dependencies": {
-    "binwrap": "^1.0.0"
+    "binwrap": "file:.."
   }
 }
