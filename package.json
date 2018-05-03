@@ -4,7 +4,7 @@
   "description": "Package cross-platform binaries",
   "main": "index.js",
   "scripts": {
-    "test": "(cd test_app && ./build_packages.sh) && mocha && eslint ."
+    "test": "(cd test_app && ./build_packages.sh) && mocha && eslint . && ./test/should_install_with_natives_1_1_2.sh"
   },
   "repository": {
     "type": "git",
