@@ -22,7 +22,7 @@ describe("binwrap", function() {
   });
 
   it("wraps *nix executables in tgz files", function() {
-    this.timeout(0);
+    this.timeout(60000);
     return exec(
       "(cd test_app && ./node_modules/.bin/binwrap-install darwin x64)"
     ).then(function(result) {
@@ -34,7 +34,7 @@ describe("binwrap", function() {
   });
 
   it("wraps Windows executables in zip files", function() {
-    this.timeout(0);
+    this.timeout(60000);
     return exec(
       "(cd test_app && ./node_modules/.bin/binwrap-install win32 x64)"
     ).then(function(result) {
@@ -46,7 +46,7 @@ describe("binwrap", function() {
   });
 
   it("fails when specified URLs don't exist", function() {
-    this.timeout(0);
+    this.timeout(60000);
     testServer.close();
     return exec("(cd test_app && npm test)").then(
       function(result) {
@@ -61,7 +61,7 @@ describe("binwrap", function() {
   });
 
   it("passes tests when specified URLs do exist", function() {
-    this.timeout(0);
+    this.timeout(60000);
     return exec("(cd test_app && npm test)");
   });
 });
