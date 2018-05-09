@@ -17,6 +17,10 @@ describe("binwrap", function() {
     testServer.close();
   });
 
+  beforeEach(function() {
+    return exec("rm -Rf test_app/bin/echoMe test_app/unpacked_bin/");
+  });
+
   it("wraps *nix executables in tgz files", function() {
     this.timeout(0);
     return exec(
