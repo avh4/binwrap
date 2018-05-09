@@ -2,3 +2,4 @@
 /node_modules/
 /bin/
 /unpacked_bin/
+/package-lock.json
