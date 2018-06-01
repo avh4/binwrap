@@ -18,13 +18,17 @@
   "homepage": "https://github.com/avh4/binwrap#readme",
   "files": [
     "install.js",
+    "prepare.js",
     "test.js",
     "binstall.js",
+    "binstub.js.mustache",
     "bin/binwrap-install",
+    "bin/binwrap-prepare",
     "bin/binwrap-test"
   ],
   "bin": {
     "binwrap-install": "bin/binwrap-install",
+    "binwrap-prepare": "bin/binwrap-prepare",
     "binwrap-test": "bin/binwrap-test"
   },
   "devDependencies": {
@@ -35,6 +39,7 @@
     "mocha": "^3.2.0"
   },
   "dependencies": {
+    "mustache": "^2.3.0",
     "request": "^2.81.0",
     "request-promise": "^4.2.0",
     "tar": "^2.2.1",

@@ -18,7 +18,10 @@ describe("binwrap", function() {
   });
 
   beforeEach(function() {
-    return exec("rm -Rf test_app/bin/echoMe test_app/unpacked_bin/");
+    this.timeout(60000);
+    return exec("rm -Rf test_app/bin/echoMe test_app/unpacked_bin/").then(function() {
+      return exec("(cd test_app && npm run-script prepare)");
+    });
   });
 
   it("wraps *nix executables in tgz files", function() {
@@ -27,7 +30,7 @@ describe("binwrap", function() {
       "(cd test_app && ./node_modules/.bin/binwrap-install darwin x64)"
     ).then(function(result) {
       console.log(result.stdout);
-      return exec("test_app/bin/echoMe A B C").then(function(result) {
+      return exec("BINWRAP_PLATFORM=darwin test_app/bin/echoMe A B C").then(function(result) {
         expect(result.stdout).to.equal("Me! A B C\n");
       });
     });
@@ -39,7 +42,7 @@ describe("binwrap", function() {
       "(cd test_app && ./node_modules/.bin/binwrap-install win32 x64)"
     ).then(function(result) {
       console.log(result.stdout);
-      return exec("test_app/bin/echoMe A B C").then(function(result) {
+      return exec("BINWRAP_PLATFORM=win32 test_app/bin/echoMe A B C").then(function(result) {
         expect(result.stdout).to.equal("Me.exe! A B C\n");
       });
     });

@@ -1,0 +1,23 @@
+#!/usr/bin/env node
+var path = require("path");
+var spawn = require("child_process").spawn;
+
+var os = process.env.BINWRAP_PLATFORM || process.platform;
+var arch = process.env.BINWRAP_ARCH || process.arch;
+
+var requested = os + "-" + arch;
+var current = process.platform + "-" + process.arch;
+if (requested !== current ) {
+  console.error("WARNING: Using binaries for the requested platform (" + requested + ") instead of for the actual platform (" + current + ").")
+}
+
+var binExt = "";
+if (os == "win32") {
+  binExt = ".exe";
+}
+
+spawn(
+  path.join(__dirname, "..", "unpacked_bin", "{{ binName }}" + binExt) ,
+  process.argv.slice(2),
+  {stdio: 'inherit'}
+).on('exit', process.exit);
