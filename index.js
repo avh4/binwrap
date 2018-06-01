@@ -5,8 +5,8 @@ var test = require(path.join(__dirname, "test"));
 
 module.exports = function(config) {
   return {
-    install: function(os, arch) {
-      return install(config, os, arch);
+    install: function(unpackedBinPath, os, arch) {
+      return install(config, unpackedBinPath, os, arch);
     },
     prepare: function() {
       return prepare(config);
