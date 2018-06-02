@@ -17,6 +17,7 @@ Now create your npm installer: Make a `package.json` that looks like this:
   "main": "index.js",
   "scripts": {
     "install": "binwrap-install",
+    "prepare": "binwrap-prepare",
     "test": "binwrap-test",
     "prepublish": "npm test"
   },

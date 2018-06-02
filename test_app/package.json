@@ -6,6 +6,7 @@
   "main": "index.js",
   "scripts": {
     "install": "binwrap-install",
+    "prepare": "binwrap-prepare",
     "prepublish": "npm test && echo \"Don't publish this test package\" && false",
     "test": "binwrap-test"
   },
