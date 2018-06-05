@@ -46,6 +46,7 @@ var version = packageInfo.version;
 var root = "https://dl.bintray.com/me/myApp/" + version;
 
 module.exports = binwrap({
+  dirname: __dirname,
   binaries: [
     "myapp-cli"
   ],

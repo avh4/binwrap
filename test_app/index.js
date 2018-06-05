@@ -1,6 +1,7 @@
 var binwrap = require("binwrap");
 
 module.exports = binwrap({
+  dirname: __dirname,
   binaries: ["echoMe"],
   urls: {
     "darwin-x64": "http://localhost:9999/echoMe-0.0.0-mac-x64.tgz",

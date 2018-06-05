@@ -7,6 +7,7 @@ var testServer = httpServer.createServer({
 
 var exec = require("child-process-promise").exec;
 var expect = require("chai").expect;
+var path = require("path");
 
 describe("binwrap", function() {
   before(function() {
@@ -97,5 +98,13 @@ describe("binwrap", function() {
   it("passes tests when specified URLs do exist", function() {
     this.timeout(60000);
     return exec("(cd test_app && npm test)");
+  });
+
+  describe("javascript API", function() {
+    it("provides absolute paths to the binwrapped binaries", function() {
+      var api = require(path.join(__dirname, "..", "test_app"));
+
+      expect(api.paths.echoMe).to.equal(path.resolve(path.join(__dirname, "..", "test_app", "bin", "echoMe")));
+    });
   });
 });
