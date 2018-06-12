@@ -1,7 +1,7 @@
 var request = require("request-promise");
 
 module.exports = function test(config) {
-  var errors = 0;
+  var errors = [];
   var checkedUrls = {};
 
   var chain = Object.keys(config.urls).reduce(
@@ -21,12 +21,13 @@ module.exports = function test(config) {
             .then(function(response) {
               if (response.statusCode != 200) {
                 throw new Error("Status code " + response.statusCode);
+              } else {
+                console.log("OKAY: [" + buildId + "] " + url);
               }
-              console.log("OKAY: " + url);
             })
             .catch(function(err) {
               console.error("  - Failed to fetch " + url + " " + err.message);
-              errors += 1;
+              errors.push("[" + buildId + "] " + url);
             });
         });
       }
@@ -34,9 +35,13 @@ module.exports = function test(config) {
     Promise.resolve()
   );
   return chain.then(function() {
-    if (errors > 0) {
-      var output = "There were errors when validating your published packages\n";
-      throw new Error(output);
+    if (errors.length > 0) {
+      console.log("There were errors when validating your published packages.");
+      console.log("ERROR: The following URLs (specified in your binwrap config) could not be downloaded (see details above):");
+      errors.forEach(function(e) {
+        console.log("  - " + e);
+      });
+      process.exit(1);
     }
   });
 };
