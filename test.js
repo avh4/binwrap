@@ -7,9 +7,13 @@ module.exports = function test(config) {
   var chain = Object.keys(config.urls).reduce(
     function(p, buildId) {
       var url = config.urls[buildId];
+      var displayUrl = "[" + buildId + "] " + url;
+      if (url.slice(0,5) === "http:") {
+        console.log("WARNING: Binary is published at an insecure URL (using https is recommended): " + displayUrl)
+      }
       if (checkedUrls[url]) {
         return p.then(function() {
-          console.log("OKAY: [" + buildId + "] " + url);
+          console.log("OKAY: " + displayUrl);
         });
       } else {
         return p.then(function() {
@@ -22,12 +26,12 @@ module.exports = function test(config) {
               if (response.statusCode != 200) {
                 throw new Error("Status code " + response.statusCode);
               } else {
-                console.log("OKAY: [" + buildId + "] " + url);
+                console.log("OKAY: " + displayUrl);
               }
             })
             .catch(function(err) {
               console.error("  - Failed to fetch " + url + " " + err.message);
-              errors.push("[" + buildId + "] " + url);
+              errors.push(displayUrl);
             });
         });
       }
