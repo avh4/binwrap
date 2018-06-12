@@ -1,5 +1,32 @@
 var request = require("request-promise");
 
+// https://nodejs.org/api/os.html#os_os_platform
+var validPlatforms = {
+  "aix": true,
+  "darwin": true,
+  "freebsd": true,
+  "linux": true,
+  "openbsd": true,
+  "sunos": true,
+  "win32": true,
+  "android": true
+};
+
+// https://nodejs.org/api/os.html#os_os_arch
+var validArchs = {
+  "arm": true,
+  "arm64": true,
+  "ia32": true,
+  "mips": true,
+  "mipsel": true,
+  "ppc": true,
+  "ppc64": true,
+  "s390": true,
+  "s390x": true,
+  "x32": true,
+  "x64": true
+};
+
 module.exports = function test(config) {
   var errors = [];
   var checkedUrls = {};
@@ -8,6 +35,17 @@ module.exports = function test(config) {
     function(p, buildId) {
       var url = config.urls[buildId];
       var displayUrl = "[" + buildId + "] " + url;
+
+      var target = buildId.split("-");
+      if (!validPlatforms[target[0]]) {
+        console.log("ERROR: A URL is provided for an unknown nodejs platform: " + target[0]);
+        process.exit(1);
+      }
+      if (!validArchs[target[1]]) {
+        console.log("ERROR: A URL is provided for an unknown nodejs arch: " + target[1]);
+        process.exit(1);
+      }
+
       if (url.slice(0,5) === "http:") {
         console.log("WARNING: Binary is published at an insecure URL (using https is recommended): " + displayUrl)
       }
