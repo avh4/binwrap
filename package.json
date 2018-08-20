@@ -18,6 +18,7 @@
   "homepage": "https://github.com/avh4/binwrap#readme",
   "files": [
     "install.js",
+    "request.js",
     "prepare.js",
     "test.js",
     "binstall.js",
@@ -40,7 +41,6 @@
   },
   "dependencies": {
     "mustache": "^2.3.0",
-    "request-stream": "1.2.2",
     "tar": "^2.2.1",
     "unzip-stream": "^0.3.0"
   }

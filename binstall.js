@@ -1,5 +1,5 @@
 var fs = require("fs");
-var request = require("request-stream");
+var request = require("./request.js");
 var tar = require("tar");
 var zlib = require("zlib");
 var unzip = require("unzip-stream");
@@ -42,16 +42,13 @@ function untgz(url, path, options) {
       reject("Error decompressing " + url + " " + error);
     });
 
-    request(url, {method: "GET"}, function(error, response) {
-      if (error) {
-        reject("Error communicating with URL " + url + " " + error);
-        return;
-      }
+    var req = request(url, {method: "GET"});
+
+    req.on("response", function(response) {
       if (response.statusCode == 404) {
         var errorMessage = options.errorMessage || "Not Found: " + url;
 
-        reject(new Error(errorMessage));
-        return;
+        throw new Error(errorMessage);
       }
 
       if (verbose) {
@@ -63,7 +60,14 @@ function untgz(url, path, options) {
       });
 
       response.pipe(gunzip).pipe(untar);
-    })
+    });
+
+    req.on("error", function(error) {
+      reject("Error communicating with URL " + url + " " + error);
+      return;
+    });
+
+    req.end();
   });
 }
 
@@ -96,12 +100,9 @@ function unzipUrl(url, path, options) {
         }
       });
 
-    request(url, {method: "GET"}, function(error, response) {
-      if (error) {
-        reject("Error communicating with URL " + url + " " + error);
-        return;
-      }
+    var req = request(url, {method: "GET"});
 
+    req.on("response", function(response) {
       if (response.statusCode == 404) {
         var errorMessage = options.errorMessage || "Not Found: " + url;
 
@@ -118,7 +119,14 @@ function unzipUrl(url, path, options) {
       });
 
       response.pipe(writeStream);
-    })
+    });
+
+    req.on("error", function(error) {
+      reject("Error communicating with URL " + url + " " + error);
+      return;
+    });
+
+    req.end();
   });
 }
 
