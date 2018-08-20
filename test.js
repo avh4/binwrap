@@ -1,4 +1,4 @@
-var request = require("request-promise");
+var request = require("request-stream");
 
 // https://nodejs.org/api/os.html#os_os_platform
 var validPlatforms = {
@@ -55,22 +55,22 @@ module.exports = function test(config) {
         });
       } else {
         return p.then(function() {
-          return request({
-            method: "GET",
-            uri: url,
-            resolveWithFullResponse: true
-          })
-            .then(function(response) {
+          return new Promise(function(resolve, reject) {
+            request(url, {method: "GET"}, function(err, response) {
+              if (err) {
+                console.error("  - Failed to fetch " + url + " " + err.message);
+                errors.push(displayUrl);
+                return reject();
+              }
+
               if (response.statusCode != 200) {
                 throw new Error("Status code " + response.statusCode);
               } else {
                 console.log("OKAY: " + displayUrl);
+                return resolve();
               }
-            })
-            .catch(function(err) {
-              console.error("  - Failed to fetch " + url + " " + err.message);
-              errors.push(displayUrl);
             });
+          });
         });
       }
     },
