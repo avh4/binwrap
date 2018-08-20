@@ -1,5 +1,5 @@
 var fs = require("fs");
-var request = require("request");
+var request = require("request-stream");
 var tar = require("tar");
 var zlib = require("zlib");
 var unzip = require("unzip-stream");
@@ -42,29 +42,28 @@ function untgz(url, path, options) {
       reject("Error decompressing " + url + " " + error);
     });
 
-    request
-      .get(url, function(error, response) {
-        if (error) {
-          reject("Error communicating with URL " + url + " " + error);
-          return;
-        }
-        if (response.statusCode == 404) {
-          var errorMessage = options.errorMessage || "Not Found: " + url;
+    request(url, {method: "GET"}, function(error, response) {
+      if (error) {
+        reject("Error communicating with URL " + url + " " + error);
+        return;
+      }
+      if (response.statusCode == 404) {
+        var errorMessage = options.errorMessage || "Not Found: " + url;
 
-          reject(new Error(errorMessage));
-          return;
-        }
+        reject(new Error(errorMessage));
+        return;
+      }
 
-        if (verbose) {
-          console.log("Downloading binaries from " + url);
-        }
+      if (verbose) {
+        console.log("Downloading binaries from " + url);
+      }
 
-        response.on("error", function() {
-          reject("Error receiving " + url);
-        });
-      })
-      .pipe(gunzip)
-      .pipe(untar);
+      response.on("error", function() {
+        reject("Error receiving " + url);
+      });
+
+      response.pipe(gunzip).pipe(untar);
+    })
   });
 }
 
@@ -97,28 +96,29 @@ function unzipUrl(url, path, options) {
         }
       });
 
-    request
-      .get(url, function(error, response) {
-        if (error) {
-          reject("Error communicating with URL " + url + " " + error);
-          return;
-        }
-        if (response.statusCode == 404) {
-          var errorMessage = options.errorMessage || "Not Found: " + url;
+    request(url, {method: "GET"}, function(error, response) {
+      if (error) {
+        reject("Error communicating with URL " + url + " " + error);
+        return;
+      }
 
-          reject(new Error(errorMessage));
-          return;
-        }
+      if (response.statusCode == 404) {
+        var errorMessage = options.errorMessage || "Not Found: " + url;
 
-        if (verbose) {
-          console.log("Downloading binaries from " + url);
-        }
+        reject(new Error(errorMessage));
+        return;
+      }
 
-        response.on("error", function() {
-          reject("Error receiving " + url);
-        });
-      })
-      .pipe(writeStream);
+      if (verbose) {
+        console.log("Downloading binaries from " + url);
+      }
+
+      response.on("error", function() {
+        reject("Error receiving " + url);
+      });
+
+      response.pipe(writeStream);
+    })
   });
 }
 
