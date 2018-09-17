@@ -45,7 +45,11 @@ function untgz(url, path, options) {
     request(
       url,
       {method: "GET"},
-      function(response) {
+      function(err, response) {
+        if (err) {
+          return reject("Error communicating with URL " + url + " " + err);
+        }
+
         if (response.statusCode == 404) {
           var errorMessage = options.errorMessage || "Not Found: " + url;
 
@@ -61,10 +65,6 @@ function untgz(url, path, options) {
         });
 
         response.pipe(gunzip).pipe(untar);
-      },
-      function(error) {
-        reject("Error communicating with URL " + url + " " + error);
-        return;
       }
     );
   });
@@ -102,7 +102,11 @@ function unzipUrl(url, path, options) {
     request(
       url,
       {method: "GET"},
-      function(response) {
+      function(err, response) {
+        if (err) {
+          return reject("Error communicating with URL " + url + " " + err);
+        }
+
         if (response.statusCode == 404) {
           var errorMessage = options.errorMessage || "Not Found: " + url;
 
@@ -119,10 +123,6 @@ function unzipUrl(url, path, options) {
         });
 
         response.pipe(writeStream);
-      },
-      function(error) {
-        reject("Error communicating with URL " + url + " " + error);
-        return;
       }
     );
   });
