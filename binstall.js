@@ -1,5 +1,5 @@
 var fs = require("fs");
-var request = require("request");
+var request = require("./request.js");
 var tar = require("tar");
 var zlib = require("zlib");
 var unzip = require("unzip-stream");
@@ -42,17 +42,18 @@ function untgz(url, path, options) {
       reject("Error decompressing " + url + " " + error);
     });
 
-    request
-      .get(url, function(error, response) {
-        if (error) {
-          reject("Error communicating with URL " + url + " " + error);
-          return;
+    request(
+      url,
+      {method: "GET"},
+      function(err, response) {
+        if (err) {
+          return reject("Error communicating with URL " + url + " " + err);
         }
+
         if (response.statusCode == 404) {
           var errorMessage = options.errorMessage || "Not Found: " + url;
 
-          reject(new Error(errorMessage));
-          return;
+          throw new Error(errorMessage);
         }
 
         if (verbose) {
@@ -62,9 +63,10 @@ function untgz(url, path, options) {
         response.on("error", function() {
           reject("Error receiving " + url);
         });
-      })
-      .pipe(gunzip)
-      .pipe(untar);
+
+        response.pipe(gunzip).pipe(untar);
+      }
+    );
   });
 }
 
@@ -97,12 +99,14 @@ function unzipUrl(url, path, options) {
         }
       });
 
-    request
-      .get(url, function(error, response) {
-        if (error) {
-          reject("Error communicating with URL " + url + " " + error);
-          return;
+    request(
+      url,
+      {method: "GET"},
+      function(err, response) {
+        if (err) {
+          return reject("Error communicating with URL " + url + " " + err);
         }
+
         if (response.statusCode == 404) {
           var errorMessage = options.errorMessage || "Not Found: " + url;
 
@@ -117,8 +121,10 @@ function unzipUrl(url, path, options) {
         response.on("error", function() {
           reject("Error receiving " + url);
         });
-      })
-      .pipe(writeStream);
+
+        response.pipe(writeStream);
+      }
+    );
   });
 }
 
