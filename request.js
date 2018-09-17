@@ -4,7 +4,7 @@ var parseUrl = require("url").parse;
 
 // Inspired by https://github.com/maxogden/request-stream
 
-module.exports = function request(url, opts) {
+module.exports = function request(url, opts, onSuccess, onError) {
   var parsed = parseUrl(url);
 
   var finalOpts = Object.assign({
@@ -13,10 +13,14 @@ module.exports = function request(url, opts) {
     port: parsed.port
   }, opts);
 
-  if (parsed.protocol === "https:") {
-    return https.request(finalOpts);
-  } else {
-    return http.request(finalOpts);
-  }
+  var req =
+    parsed.protocol === "https:"
+      ? https.request(finalOpts)
+      : http.request(finalOpts);
+
+  req.on("response", onSuccess);
+  req.on("error", onError);
+
+  return req.end();
 }
 
