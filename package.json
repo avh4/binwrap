@@ -42,7 +42,7 @@
     "mustache": "^2.3.0",
     "request": "^2.87.0",
     "request-promise": "^4.2.0",
-    "tar": "^2.2.1",
+    "tar": "^4.4.8",
     "unzip-stream": "^0.3.0"
   }
 }

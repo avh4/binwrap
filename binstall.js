@@ -20,7 +20,7 @@ function untgz(url, path, options) {
 
   return new Promise(function(resolve, reject) {
     var untar = tar
-      .Extract({ path: path })
+      .x({ cwd: path })
       .on("error", function(error) {
         reject("Error extracting " + url + " - " + error);
       })
@@ -41,6 +41,8 @@ function untgz(url, path, options) {
     var gunzip = zlib.createGunzip().on("error", function(error) {
       reject("Error decompressing " + url + " " + error);
     });
+
+    fs.mkdirSync(path);
 
     request
       .get(url, function(error, response) {
