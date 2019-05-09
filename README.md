@@ -30,7 +30,7 @@ Now create your npm installer: Make a `package.json` that looks like this:
     "myapp-cli": "bin/myapp-cli"
   },
   "dependencies": {
-    "binwrap": "^0.2.0"
+    "binwrap": "^0.2.1"
   }
 }
 ```
