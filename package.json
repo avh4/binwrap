@@ -1,6 +1,6 @@
 {
   "name": "binwrap",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Package cross-platform binaries",
   "main": "index.js",
   "scripts": {
