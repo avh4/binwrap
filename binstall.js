@@ -42,7 +42,9 @@ function untgz(url, path, options) {
       reject("Error decompressing " + url + " " + error);
     });
 
-    fs.mkdirSync(path);
+    if (!fs.existsSync(path)) {
+      fs.mkdirSync(path);
+    }
 
     request
       .get(url, function(error, response) {
