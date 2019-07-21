@@ -2,8 +2,6 @@
 var path = require("path");
 var spawn = require("child_process").spawn;
 var fs = require("fs");
-var packageInfo = require(path.join(__dirname, "..", "package.json"));
-var package = require(path.join(__dirname, "..", packageInfo.main));
 
 var os = process.env.BINWRAP_PLATFORM || process.platform;
 var arch = process.env.BINWRAP_ARCH || process.arch;
@@ -34,6 +32,10 @@ if (fs.existsSync(binPath)) {
   execBin();
 } else {
   console.error("INFO: Running " + path.basename(__filename) + " for the first time; downloading the actual binary");
+
+  var packageInfo = require(path.join(__dirname, "..", "package.json"));
+  var package = require(path.join(__dirname, "..", packageInfo.main));
+
   package.install(unpackedBinPath, os, arch).then(function(result) {
     execBin();
   }, function(err) {
