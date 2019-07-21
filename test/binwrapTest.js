@@ -58,6 +58,22 @@ describe("binwrap", function() {
         });
       });
     });
+
+    it("works when a previous version was installed", function() {
+      this.timeout(60000);
+      return exec(
+        "(cd test_app && ./node_modules/.bin/binwrap-install darwin x64)"
+      ).then(function() {
+        return exec(
+          "(cd test_app && ./node_modules/.bin/binwrap-install darwin x64)"
+        );
+      }).then(function() {
+        testServer.close();
+        return exec("BINWRAP_PLATFORM=darwin BINWRAP_ARCH=x64 test_app/bin/echoMe A B C").then(function(result) {
+          expect(result.stdout).to.equal("Me! A B C\n");
+        });
+      });
+    });
   });
 
   describe("installing with --ignore-scripts", function() {
