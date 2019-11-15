@@ -50,6 +50,7 @@ module.exports = binwrap({
   binaries: [
     "myapp-cli"
   ],
+  binariesPath: 'in case your binaries are nested inside the unpacked folder'
   urls: {
     "darwin-x64": root + "/mac-x64.tgz",
     "linux-x64": root + "/linux-x64.tgz",

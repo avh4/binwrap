@@ -17,7 +17,7 @@ if (os == "win32") {
   binExt = ".exe";
 }
 
-var unpackedBinPath = path.join(__dirname, "..", "unpacked_bin");
+var unpackedBinPath = path.join(__dirname, "..", "unpacked_bin", "{{ binariesPath }}");
 var binPath = path.join(unpackedBinPath, "{{ binName }}" + binExt);
 
 function execBin() {

@@ -11,7 +11,7 @@ module.exports = function prepare(config) {
 
   config.binaries.forEach(function(bin) {
     var binPath = path.join("bin", bin);
-    var content = mustache.render(binstubTemplate, { binName: bin });
+    var content = mustache.render(binstubTemplate, { binName: bin, binariesPath: config.binariesPath });
     fs.writeFileSync(binPath, content);
     fs.chmodSync(binPath, "755");
   });
