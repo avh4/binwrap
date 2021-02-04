@@ -4,7 +4,7 @@
   "description": "Package cross-platform binaries",
   "main": "index.js",
   "scripts": {
-    "test": "(cd test_app && ./build_packages.sh) && mocha && eslint ."
+    "test": "(cd test_app && ./build_packages.sh && npm install ../) && mocha && eslint ."
   },
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
     "prepare.js",
     "test.js",
     "binstall.js",
-    "binstub.js.mustache",
+    "binstub.js.template",
     "bin/binwrap-install",
     "bin/binwrap-prepare",
     "bin/binwrap-test"
@@ -39,9 +39,7 @@
     "mocha": "^8.2.1"
   },
   "dependencies": {
-    "mustache": "^4.1.0",
     "request": "^2.88.0",
-    "request-promise": "^4.2.5",
     "tar": "^6.1.0",
     "unzip-stream": "^0.3.1"
   }

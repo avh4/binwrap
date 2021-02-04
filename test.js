@@ -1,4 +1,4 @@
-var request = require("request-promise");
+var request = require("request");
 
 // https://nodejs.org/api/os.html#os_os_platform
 var validPlatforms = {
@@ -29,7 +29,6 @@ var validArchs = {
 
 module.exports = function test(config) {
   var errors = [];
-  var checkedUrls = {};
 
   var chain = Object.keys(config.urls).reduce(
     function(p, buildId) {
@@ -49,30 +48,25 @@ module.exports = function test(config) {
       if (url.slice(0,5) === "http:") {
         console.log("WARNING: Binary is published at an insecure URL (using https is recommended): " + displayUrl)
       }
-      if (checkedUrls[url]) {
-        return p.then(function() {
-          console.log("OKAY: " + displayUrl);
-        });
-      } else {
-        return p.then(function() {
-          return request({
-            method: "GET",
-            uri: url,
-            resolveWithFullResponse: true
-          })
-            .then(function(response) {
-              if (response.statusCode != 200) {
-                throw new Error("Status code " + response.statusCode);
-              } else {
-                console.log("OKAY: " + displayUrl);
-              }
-            })
-            .catch(function(err) {
-              console.error("  - Failed to fetch " + url + " " + err.message);
+
+      return p.then(function() {
+        return new Promise(function(resolve) {
+          request({ method: "GET", uri: url }, function(err, response) {
+            if (err) {
+              console.error("  - Failed to fetch " + url + ": " + err.message);
               errors.push(displayUrl);
-            });
+              resolve();
+            } else if (response.statusCode != 200) {
+              console.error("  - Got non-200 response for " + url + ": " + response.statusCode);
+              errors.push(displayUrl);
+              resolve();
+            } else {
+              console.log("OKAY: " + displayUrl);
+              resolve();
+            }
+          });
         });
-      }
+      });
     },
     Promise.resolve()
   );
