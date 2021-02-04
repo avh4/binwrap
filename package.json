@@ -21,7 +21,7 @@
     "prepare.js",
     "test.js",
     "binstall.js",
-    "binstub.js.template",
+    "binstub.js.mustache",
     "bin/binwrap-install",
     "bin/binwrap-prepare",
     "bin/binwrap-test"

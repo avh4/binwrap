@@ -1,3 +1,8 @@
+## 0.2.3
+
+- HTTP error codes are handled more correctly when package authors test their packages
+
+
 ## 0.2.2
 
 - startup time is reduces by 70% (about 150ms)
