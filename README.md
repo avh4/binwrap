@@ -62,3 +62,14 @@ module.exports = binwrap({
 Then run `npm test` to verify that your packages are published correctly.
 
 Finally, run `npm publish` when you are ready to publish your installer.
+
+
+## Javascript API
+
+Javascript code can get the absolute path to a binary from a package that uses binwrap
+as follows (in this example, "my-package" is a published npm package that uses binwrap,
+and has a `my-package-cli` binary):
+
+```js
+const cliPath = require('my-package').paths['my-package-cli'];
+```
