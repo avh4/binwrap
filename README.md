@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/avh4/binwrap.svg?branch=master)](https://travis-ci.org/avh4/binwrap) [![npm](https://img.shields.io/npm/v/binwrap.svg)](https://www.npmjs.com/package/binwrap)
+[![Build Status](https://travis-ci.org/avh4/binwrap.svg?branch=main)](https://travis-ci.org/avh4/binwrap) [![npm](https://img.shields.io/npm/v/binwrap.svg)](https://www.npmjs.com/package/binwrap)
 
 This package helps with distributing binaries via npm.
 
