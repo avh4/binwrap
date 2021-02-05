@@ -1,6 +1,5 @@
 var fs = require("fs");
 var path = require("path");
-var mustache = require("mustache");
 
 module.exports = function prepare(config) {
   if (!fs.existsSync("bin")) {
@@ -11,7 +10,7 @@ module.exports = function prepare(config) {
 
   config.binaries.forEach(function(bin) {
     var binPath = path.join("bin", bin);
-    var content = mustache.render(binstubTemplate, { binName: bin });
+    var content = binstubTemplate.replace(/{{ binName }}/g, JSON.stringify(bin));
     fs.writeFileSync(binPath, content);
     fs.chmodSync(binPath, "755");
   });

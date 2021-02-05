@@ -18,7 +18,7 @@ if (os == "win32") {
 }
 
 var unpackedBinPath = path.join(__dirname, "..", "unpacked_bin");
-var binPath = path.join(unpackedBinPath, "{{ binName }}" + binExt);
+var binPath = path.join(unpackedBinPath, {{ binName }} + binExt);
 
 function execBin() {
   spawn(

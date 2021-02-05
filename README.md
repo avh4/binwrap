@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/avh4/binwrap.svg?branch=master)](https://travis-ci.org/avh4/binwrap) [![npm](https://img.shields.io/npm/v/binwrap.svg)](https://www.npmjs.com/package/binwrap)
+[![Build Status](https://github.com/avh4/binwrap/workflows/CI/badge.svg)](https://github.com/avh4/binwrap/actions?query=workflow%3ACI) [![npm](https://img.shields.io/npm/v/binwrap.svg)](https://www.npmjs.com/package/binwrap)
 
 This package helps with distributing binaries via npm.
 
@@ -30,7 +30,7 @@ Now create your npm installer: Make a `package.json` that looks like this:
     "myapp-cli": "bin/myapp-cli"
   },
   "dependencies": {
-    "binwrap": "^0.2.2"
+    "binwrap": "^0.2.3"
   }
 }
 ```
@@ -62,3 +62,14 @@ module.exports = binwrap({
 Then run `npm test` to verify that your packages are published correctly.
 
 Finally, run `npm publish` when you are ready to publish your installer.
+
+
+## Javascript API
+
+Javascript code can get the absolute path to a binary from a package that uses binwrap
+as follows (in this example, "my-package" is a published npm package that uses binwrap,
+and has a `my-package-cli` binary):
+
+```js
+const cliPath = require('my-package').paths['my-package-cli'];
+```
