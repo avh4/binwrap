@@ -1,5 +1,6 @@
+'use strict'
 var fs = require("fs");
-var request = require("request");
+var fetch = require('node-fetch')
 var tar = require("tar");
 var zlib = require("zlib");
 var unzip = require("unzip-stream");
@@ -48,29 +49,16 @@ function untgz(url, path, options) {
       if (error.code !== 'EEXIST') throw error;
     }
 
-    request
-      .get(url, function(error, response) {
-        if (error) {
-          reject("Error communicating with URL " + url + " " + error);
-          return;
-        }
-        if (response.statusCode == 404) {
-          var errorMessage = options.errorMessage || "Not Found: " + url;
-
-          reject(new Error(errorMessage));
-          return;
-        }
-
-        if (verbose) {
-          console.log("Downloading binaries from " + url);
-        }
-
-        response.on("error", function() {
-          reject("Error receiving " + url);
-        });
-      })
+    if (verbose) {
+      console.log("Downloading binaries from " + url);
+    }
+    return fetch(url)
+    .then(function (response) {
+      response.body
       .pipe(gunzip)
       .pipe(untar);
+      return
+    })
   });
 }
 
@@ -103,28 +91,13 @@ function unzipUrl(url, path, options) {
         }
       });
 
-    request
-      .get(url, function(error, response) {
-        if (error) {
-          reject("Error communicating with URL " + url + " " + error);
-          return;
-        }
-        if (response.statusCode == 404) {
-          var errorMessage = options.errorMessage || "Not Found: " + url;
-
-          reject(new Error(errorMessage));
-          return;
-        }
-
-        if (verbose) {
-          console.log("Downloading binaries from " + url);
-        }
-
-        response.on("error", function() {
-          reject("Error receiving " + url);
-        });
+      if (verbose) {
+        console.log("Downloading binaries from " + url);
+      }
+    return fetch(url)
+      .then(function (response) {
+        response.body.pipe(writeStream);
       })
-      .pipe(writeStream);
   });
 }
 

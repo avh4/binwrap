@@ -39,7 +39,7 @@
     "mocha": "^8.2.1"
   },
   "dependencies": {
-    "request": "^2.88.0",
+    "node-fetch": "^3.0.0-beta.9",
     "tar": "^6.1.0",
     "unzip-stream": "^0.3.1"
   }
