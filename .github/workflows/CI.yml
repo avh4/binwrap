@@ -3,10 +3,11 @@ name: CI
 on:
   push:
     branches:
-      - $default-branch
+      - main
       - 'release/*'
   pull_request:
-    branches: [ $default-branch ]
+    branches:
+      - main
 
 jobs:
   build:
@@ -15,9 +16,9 @@ jobs:
     strategy:
       matrix:
         node-version:
-          - 10.x
-          - 12.x
           - 14.x
+          - 16.x
+          - 18.x
 
     steps:
       - uses: actions/checkout@v2
