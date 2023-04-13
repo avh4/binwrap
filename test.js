@@ -1,4 +1,4 @@
-var request = require("request");
+var axios = require("axios");
 
 // https://nodejs.org/api/os.html#os_os_platform
 var validPlatforms = {
@@ -56,24 +56,15 @@ module.exports = function test(config) {
     }
 
     return p.then(function () {
-      return new Promise(function (resolve) {
-        request({ method: "GET", uri: url }, function (err, response) {
-          if (err) {
-            console.error("  - Failed to fetch " + url + ": " + err.message);
-            errors.push(displayUrl);
-            resolve();
-          } else if (response.statusCode != 200) {
-            console.error(
-              "  - Got non-200 response for " + url + ": " + response.statusCode
-            );
-            errors.push(displayUrl);
-            resolve();
-          } else {
-            console.log("OKAY: " + displayUrl);
-            resolve();
-          }
+      return axios
+        .get(url)
+        .then(function () {
+          console.log("OKAY: " + displayUrl);
+        })
+        .catch((error) => {
+          console.error(error);
+          errors.push(displayUrl);
         });
-      });
     });
   }, Promise.resolve());
   return chain.then(function () {

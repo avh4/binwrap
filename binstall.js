@@ -1,5 +1,5 @@
 var fs = require("fs");
-var request = require("request");
+var axios = require("axios");
 var tar = require("tar");
 var zlib = require("zlib");
 var unzip = require("unzip-stream");
@@ -48,29 +48,22 @@ function untgz(url, path, options) {
       if (error.code !== "EEXIST") throw error;
     }
 
-    request
-      .get(url, function (error, response) {
-        if (error) {
-          reject("Error communicating with URL " + url + " " + error);
-          return;
-        }
-        if (response.statusCode == 404) {
-          var errorMessage = options.errorMessage || "Not Found: " + url;
+    if (verbose) {
+      console.log("Downloading binaries from " + url);
+    }
 
-          reject(new Error(errorMessage));
-          return;
-        }
-
-        if (verbose) {
-          console.log("Downloading binaries from " + url);
-        }
-
-        response.on("error", function () {
-          reject("Error receiving " + url);
-        });
+    axios
+      .get(url, { responseType: "stream" })
+      .then((response) => {
+        response.data.pipe(gunzip).pipe(untar);
       })
-      .pipe(gunzip)
-      .pipe(untar);
+      .catch((error) => {
+        if (verbose) {
+          console.error(error);
+        } else {
+          console.error(error.message);
+        }
+      });
   });
 }
 
@@ -103,28 +96,22 @@ function unzipUrl(url, path, options) {
         }
       });
 
-    request
-      .get(url, function (error, response) {
-        if (error) {
-          reject("Error communicating with URL " + url + " " + error);
-          return;
-        }
-        if (response.statusCode == 404) {
-          var errorMessage = options.errorMessage || "Not Found: " + url;
+    if (verbose) {
+      console.log("Downloading binaries from " + url);
+    }
 
-          reject(new Error(errorMessage));
-          return;
-        }
-
-        if (verbose) {
-          console.log("Downloading binaries from " + url);
-        }
-
-        response.on("error", function () {
-          reject("Error receiving " + url);
-        });
+    axios
+      .get(url, { responseType: "stream" })
+      .then((response) => {
+        response.data.pipe(writeStream);
       })
-      .pipe(writeStream);
+      .catch((error) => {
+        if (verbose) {
+          console.error(error);
+        } else {
+          console.error(error.message);
+        }
+      });
   });
 }
 
