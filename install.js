@@ -17,8 +17,8 @@ module.exports = function install(config, unpackedBinPath, os, arch) {
   if (!url) {
     throw new Error("No binaries are available for your platform: " + buildId);
   }
-  return binstall(url, unpackedBinPath).then(function() {
-    config.binaries.forEach(function(bin) {
+  return binstall(url, unpackedBinPath).then(function () {
+    config.binaries.forEach(function (bin) {
       fs.chmodSync(path.join(unpackedBinPath, bin + binExt), "755");
     });
   });

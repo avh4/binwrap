@@ -6,17 +6,24 @@ module.exports = function prepare(config) {
     fs.mkdirSync("bin");
   }
 
-  var binstubTemplate = fs.readFileSync(path.join(__dirname, "binstub.js.mustache")).toString();
+  var binstubTemplate = fs
+    .readFileSync(path.join(__dirname, "binstub.js.mustache"))
+    .toString();
 
-  config.binaries.forEach(function(bin) {
+  config.binaries.forEach(function (bin) {
     var binPath = path.join("bin", bin);
-    var content = binstubTemplate.replace(/{{ binName }}/g, JSON.stringify(bin));
+    var content = binstubTemplate.replace(
+      /{{ binName }}/g,
+      JSON.stringify(bin)
+    );
     fs.writeFileSync(binPath, content);
     fs.chmodSync(binPath, "755");
   });
 
   // verifyAllBinsExist(packageInfo.bin);
-  return new Promise(function(resolve) { resolve(); });
+  return new Promise(function (resolve) {
+    resolve();
+  });
 };
 
 // function verifyAllBinsExist(binInfo) {
